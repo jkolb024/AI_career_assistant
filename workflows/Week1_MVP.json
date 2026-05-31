@@ -1,0 +1,228 @@
+{
+  "name": "Week1_MVP",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "bb2773f7-c24a-47bc-a234-725ccd479f74",
+      "name": "Manual Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6c9ccfa0-61e5-4664-8ec9-ca5dc8d3be18",
+              "name": "title",
+              "value": "Embedded Software Engineer Intern",
+              "type": "string"
+            },
+            {
+              "id": "638ab491-ced4-48e9-bd65-e30200fda7f8",
+              "name": "company",
+              "value": "Lockheed Martin",
+              "type": "string"
+            },
+            {
+              "id": "9bc7781c-86b6-42c3-a5ad-634047ab4a22",
+              "name": "location",
+              "value": "Atlanta, GA",
+              "type": "string"
+            },
+            {
+              "id": "5822cb5a-3e3c-4419-9991-a5cb7cb725b4",
+              "name": "description",
+              "value": "C++, embedded systems, AI autonomy work",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "239d5d5b-511a-453a-afaa-d705e218f587",
+      "name": "Mock Job Data"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are evaluating jobs for a computer engineering student interested in AI, embedded systems, defense, and high-income career growth.\n\nScore this job from 1-100.\n\nReturn ONLY JSON.\n\nJob Title:\n{{$json.title}}\n\nCompany:\n{{$json.company}}\n\nLocation:\n{{$json.location}}\n\nDescription:\n{{$json.description}}\n\nReturn format:\n{\n  \"score\": number,\n  \"reason\": \"short explanation\"\n}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "cf0af707-bbce-41bf-a14a-c9afe33feda3",
+      "name": "AI Job Scorer",
+      "credentials": {
+        "openAiApi": {
+          "id": "kDCJ5s6kUSSJPPGS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "jobs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "title",
+              "fieldValue": "={{$node[\"Mock Job Data\"].json[\"title\"]}}"
+            },
+            {
+              "fieldId": "company",
+              "fieldValue": "={{$node[\"Mock Job Data\"].json[\"company\"]}}"
+            },
+            {
+              "fieldId": "location",
+              "fieldValue": "={{$node[\"Mock Job Data\"].json[\"location\"]}}"
+            },
+            {
+              "fieldId": "description",
+              "fieldValue": "={{$node[\"Mock Job Data\"].json[\"description\"]}}"
+            },
+            {
+              "fieldId": "ai_reason",
+              "fieldValue": "={{$node[\"AI Job Scorer\"].json[\"output\"][0][\"content\"][0][\"text\"]}}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        768,
+        0
+      ],
+      "id": "0100dc15-425a-4d58-95a0-022ff64282fe",
+      "name": "Store Job",
+      "credentials": {
+        "supabaseApi": {
+          "id": "dUooSFTUJo30TUUi",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1510472396182913155",
+          "mode": "list",
+          "cachedResultName": "AI Career Assistant",
+          "cachedResultUrl": "https://discord.com/channels/1510472396182913155"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1510479838673240105",
+          "mode": "list",
+          "cachedResultName": "job-alerts",
+          "cachedResultUrl": "https://discord.com/channels/1510472396182913155/1510479838673240105"
+        },
+        "content": "=New High-Match Job Found\n\n{{$node[\"Mock Job Data\"].json[\"company\"]}}\n\n{{$node[\"Mock Job Data\"].json[\"title\"]}}\n\nLocation:\n{{$node[\"Mock Job Data\"].json[\"location\"]}}\n\nAI Analysis:\n{{$node[\"AI Job Scorer\"].json[\"output\"][0][\"content\"][0][\"text\"]}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        976,
+        0
+      ],
+      "id": "3ea32008-cfb7-41f1-a7f5-03fc922a2bd9",
+      "name": "Discord Alert",
+      "webhookId": "0342b3cd-e898-4650-96b3-4545749b40e5",
+      "credentials": {
+        "discordBotApi": {
+          "id": "E0SL89GhdbpgupeH",
+          "name": "Discord Bot account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mock Job Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock Job Data": {
+      "main": [
+        [
+          {
+            "node": "AI Job Scorer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Job Scorer": {
+      "main": [
+        [
+          {
+            "node": "Store Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Job": {
+      "main": [
+        [
+          {
+            "node": "Discord Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d8ec05d4-f4ff-4e73-891f-0c026a26b4e2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "db76c038ce38c54eef0c0b5c8e6833b2f0b866467c272c3a5562de62a0e0b770"
+  },
+  "id": "F3vH8C0hzYnwx5a7",
+  "tags": []
+}
