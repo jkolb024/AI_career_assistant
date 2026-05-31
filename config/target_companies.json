@@ -1,0 +1,97 @@
+[
+  {
+    "company": "Nvidia",
+    "priority": 10
+  },
+  {
+    "company": "Anduril",
+    "priority": 10
+  },
+  {
+    "company": "Microsoft",
+    "priority": 8
+  },
+  {
+    "company": "Lockheed Martin",
+    "priority": 8
+  },
+  {
+    "company": "Google",
+    "priority": 9
+  },
+  {
+    "company": "SAIC",
+    "priority": 7
+  },
+  {
+    "company": "Salesforce",
+    "priority": 7
+  },
+  {
+    "company": "RTX",
+    "priority": 8
+  },
+  {
+    "company": "Delta",
+    "priority": 6
+  },
+  {
+    "company": "NCR",
+    "priority": 6
+  },
+  {
+    "company": "Intuit",
+    "priority": 6
+  },
+  {
+    "company": "Workday",
+    "priority": 6
+  },
+  {
+    "company": "IBM",
+    "priority": 6
+  },
+  {
+    "company": "Sheild AI",
+    "priority": 6
+  },
+  {
+    "company": "Chick-fil-a",
+    "priority": 6
+  },
+  {
+    "company": "Northrop Grumman",
+    "priority": 6
+  },
+  {
+    "company": "Boeing",
+    "priority": 6
+  },
+  {
+    "company": "Raytheon",
+    "priority": 6
+  },
+  {
+    "company": "General Dynamics",
+    "priority": 6
+  },
+  {
+    "company": "Global Payments",
+    "priority": 6
+  }
+  ,
+  {
+    "company": "Fiserv",
+    "priority": 6
+  }
+  ,
+  {
+    "company": "NCR Voyix",
+    "priority": 6
+  }
+  ,
+  {
+    "company": "L3Harris",
+    "priority": 6
+  }
+]
