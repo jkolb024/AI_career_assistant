@@ -78,20 +78,50 @@
   {
     "company": "Global Payments",
     "priority": 6
-  }
-  ,
+  },
   {
     "company": "Fiserv",
     "priority": 6
-  }
-  ,
+  },
   {
     "company": "NCR Voyix",
     "priority": 6
-  }
-  ,
+  },
   {
     "company": "L3Harris",
     "priority": 6
+  },
+  {
+    "company": "Amazon",
+    "priority": 6
+  },
+  {
+    "company": "Meta",
+    "priority": 6
+  },
+  {
+    "company": "HP",
+    "priority": 6
+  },
+  {
+    "company": "Intel",
+    "priority": 6
+  },
+  {
+    "company": "Dell",
+    "priority": 6
+  },
+  {
+    "company": "Deloitte",
+    "priority": 6
+  },
+  {
+    "company": "Brasfield & Gorrie",
+    "priority": 6
+  },
+  {
+    "company": "FORTNA",
+    "priority": 6
   }
+
 ]
