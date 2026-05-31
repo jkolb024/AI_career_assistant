@@ -1,0 +1,434 @@
+{
+  "name": "Week2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -64
+      ],
+      "id": "24b14cab-ac15-4fd6-9ec5-a94f4758a63e",
+      "name": "Manual Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://boards-api.greenhouse.io/v1/boards/anthropic/jobs",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        -64
+      ],
+      "id": "6f3ef347-6c03-426a-80a8-871f700bad50",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "jobs",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -64
+      ],
+      "id": "251fb1a4-a7bd-4bc5-919a-22dbb176f90d",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5c83fe95-f95a-4abf-bd3b-9a9cf0f9beb2",
+              "name": "title",
+              "value": "={{$json.title}}",
+              "type": "string"
+            },
+            {
+              "id": "b085e5a7-102a-4c0a-a113-7cdfd32028cc",
+              "name": "company",
+              "value": "={{$json.company_name}}",
+              "type": "string"
+            },
+            {
+              "id": "5da7287c-0a16-451b-9c3d-bb0ca9042e08",
+              "name": "location",
+              "value": "={{ $json.location.name }}",
+              "type": "string"
+            },
+            {
+              "id": "614fd88f-8875-4204-810a-9a33e7d12867",
+              "name": "url",
+              "value": "={{ $json.absolute_url }}",
+              "type": "string"
+            },
+            {
+              "id": "624f1e04-54aa-4c0f-8ea2-8712cc8240e5",
+              "name": "date_posted",
+              "value": "={{ $json.first_published }}",
+              "type": "string"
+            },
+            {
+              "id": "0f70513a-4773-47c2-81af-2dff5716cc08",
+              "name": "job_id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "3b2f3f08-6c69-4405-b5dc-0d19ae6cf6d8",
+              "name": "language",
+              "value": "={{ $json.language }}",
+              "type": "string"
+            },
+            {
+              "id": "aaeff5e3-1375-4b5a-a5b4-ec3238992f91",
+              "name": "application_deadline",
+              "value": "={{ $json.application_deadline }}",
+              "type": "string"
+            },
+            {
+              "id": "bba56aba-891b-49ae-9d6a-3de475cd5f57",
+              "name": "work_location_type",
+              "value": "={{ $json.metadata[0].value }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "selected",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -64
+      ],
+      "id": "9dfdaa75-2c0a-45f6-acb4-3200c21f2627",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "=https://boards-api.greenhouse.io/v1/boards/anthropic/jobs/{{$json.job_id}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        896,
+        -64
+      ],
+      "id": "596b74bd-4f2a-401b-8b74-d21a24ca10c7",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5c668a9a-621c-42e6-9985-42765501a7ae",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "9db7295a-cf03-4a8c-ab7d-ad279b5b9828",
+              "name": "company",
+              "value": "={{ $json.company_name }}",
+              "type": "string"
+            },
+            {
+              "id": "bf5703df-d03b-48b7-87e0-801f42784de3",
+              "name": "location",
+              "value": "={{ $json.location.name }}",
+              "type": "string"
+            },
+            {
+              "id": "821dae34-911a-44fd-b01f-695af881dd8e",
+              "name": "url",
+              "value": "={{ $json.absolute_url }}",
+              "type": "string"
+            },
+            {
+              "id": "8461424e-a2d9-4212-970d-cae11d924605",
+              "name": "description",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            },
+            {
+              "id": "39b0295e-3e35-4f2e-b313-d9dd501e547b",
+              "name": "job_id",
+              "value": "={{ $json.metadata[0].id }}",
+              "type": "number"
+            },
+            {
+              "id": "c2d7a3de-024b-4d64-bfe3-2f9f3f5c792f",
+              "name": "date_posted",
+              "value": "={{ $json.first_published }}",
+              "type": "string"
+            },
+            {
+              "id": "9b6018f3-8bfb-4580-8672-ad85cd5e5f2f",
+              "name": "source",
+              "value": "greenhouse",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "selected",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        -64
+      ],
+      "id": "9edb3b16-b681-4007-a699-07176e0a1756",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are evaluating jobs for a computer engineering student interested in:\n- AI\n- embedded systems\n- defense technology\n- high-income career growth\n- Atlanta/Huntsville opportunities\n\nEvaluate this job.\n\nTitle:\n{{$json.title}}\n\nCompany:\n{{$json.company}}\n\nLocation:\n{{$json.location}}\n\nDescription:\n{{$json.description}}\n\nReturn ONLY valid JSON:\n\n{\n  \"score\": number,\n  \"reason\": \"short explanation\"\n}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1568,
+        -64
+      ],
+      "id": "6fd91516-02be-4e79-aba3-5cdbea45df06",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kDCJ5s6kUSSJPPGS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1510472396182913155",
+          "mode": "list",
+          "cachedResultName": "AI Career Assistant",
+          "cachedResultUrl": "https://discord.com/channels/1510472396182913155"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1510479838673240105",
+          "mode": "list",
+          "cachedResultName": "job-alerts",
+          "cachedResultUrl": "https://discord.com/channels/1510472396182913155/1510479838673240105"
+        },
+        "content": "=New High-Match Job Found\n\n{{$node[\"Edit Fields1\"].json[\"company\"]}}\n\n{{$node[\"Edit Fields1\"].json[\"title\"]}}\n\nLocation:\n{{$node[\"Edit Fields1\"].json[\"location\"]}}\n\nAI Analysis:\n{{$node[\"Message a model\"].json[\"output\"][0][\"content\"][0][\"text\"]}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        2144,
+        -64
+      ],
+      "id": "3205e6d7-270b-40b6-b3a7-da589ecf3ab3",
+      "name": "Send a message",
+      "webhookId": "79fdb122-34bb-4d63-b5d1-7ad96d0ac3b9",
+      "credentials": {
+        "discordBotApi": {
+          "id": "E0SL89GhdbpgupeH",
+          "name": "Discord Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        -64
+      ],
+      "id": "b294f6cb-a963-4231-9277-ab8bbc2c6dce",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "tableId": "jobs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $('Limit').item.json.title }}"
+            },
+            {
+              "fieldId": "company",
+              "fieldValue": "={{ $('Limit').item.json.company }}"
+            },
+            {
+              "fieldId": "location",
+              "fieldValue": "={{ $('Limit').item.json.location }}"
+            },
+            {
+              "fieldId": "description",
+              "fieldValue": "={{ $('Limit').item.json.description }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        -64
+      ],
+      "id": "023753b2-7823-40f7-a3f5-247edee74823",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "dUooSFTUJo30TUUi",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1bb250bb-16e0-45c8-af0e-236e20a290b6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "db76c038ce38c54eef0c0b5c8e6833b2f0b866467c272c3a5562de62a0e0b770"
+  },
+  "id": "g2cGGtykyZrjrAIC",
+  "tags": []
+}
