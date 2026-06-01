@@ -11,3 +11,4 @@ services:
       - N8N_PROTOCOL=http
     volumes:
       - ./n8n_data:/home/node/.n8n
+      - ./:/workspace
